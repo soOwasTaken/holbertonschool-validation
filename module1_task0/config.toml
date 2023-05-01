@@ -2,3 +2,4 @@ baseURL = 'http://example.org/'
 languageCode = 'en-us'
 title = 'Awesome Inc.'
 theme = "ananke"
+publishDir = "module1_task0/dist/"

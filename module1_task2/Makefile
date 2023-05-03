@@ -1,26 +1,17 @@
-# Environment Variables
 POST_TITLE ?= "New Blog Post"
 POST_NAME ?= "new-blog-post"
 
 .PHONY: build clean post
 
-# Generate the website from the markdown and configuration files
-build:
+build: ## Generate the website from the markdown and configuration files
 	@hugo
 
-# Clean up the generated website
-clean:
+clean: ## Clean up the generated website
 	@rm -rf dist/*
 
-# Create a new blog post
-post:
+post: ## Create a new blog post
 	@hugo new posts/$(POST_NAME).md
 	@sed -i 's/title: .*/title: $(POST_TITLE)/' content/posts/$(POST_NAME).md
 
-# Show help message
-help:
-	@echo "Available targets:"
-	@echo "  build	Generate the website from the markdown and configuration files"
-	@echo "  clean	Clean up the generated website"
-	@echo "  post	Create a new blog post"
-	@echo "  help	Show this help message"
+help: ## Show help message
+	@grep "##" Makefile | grep -v grep | sed "s/##//"

@@ -38,6 +38,6 @@ make clean
 To create a new blog post, set the `POST_TITLE` and `POST_NAME` environment variables and run:
 make post
 
-To see a list of available targets and their usage, run:
+To see a list of available commands and their usage, run:
 make help
-This will show a list of available targets and their usage information.
+This will show a list of available commands and their usage information.

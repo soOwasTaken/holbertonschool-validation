@@ -19,6 +19,7 @@ post:
 
 # Show help message
 help:
+	@echo "Available targets:"
 	@echo "  build	Generate the website from the markdown and configuration files"
 	@echo "  clean	Clean up the generated website"
 	@echo "  post	Create a new blog post"

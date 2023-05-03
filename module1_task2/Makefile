@@ -19,7 +19,6 @@ post:
 
 # Show help message
 help:
-	@echo "Please use 'make <target>' where <target> is one of the following:"
 	@echo "  build	Generate the website from the markdown and configuration files"
 	@echo "  clean	Clean up the generated website"
 	@echo "  post	Create a new blog post"

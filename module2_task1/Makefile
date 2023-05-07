@@ -28,7 +28,7 @@ test: ## Run automated tests
 	@curl http://localhost:9999/health
 
 lint: ## lint the program using golangci-lint
-	@golangci-lint run >/dev/null 2>&1 && echo "OK" || echo "ERROR"
+	@golangci-lint run >/dev/null 2>&1 && echo "OK" || echo "ERROR && exit 1"
 
 help: ## Show help message
 	@grep "##" Makefile | grep -v grep | sed "s/##//"

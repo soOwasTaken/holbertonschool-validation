@@ -14,7 +14,7 @@ Before building and running the API, you will need to have the following install
 
 To compile the source code of the API into a binary named awesome-api, run:
 make build
-This will compile the source code and output the binary to the current directory.
+This will compile the source code and output the binary to the current directory. A linter will be used first, if the build have error from the linter, the build will be created, but you will see prompted ERROR, if not you will see OK.
 ### Run
 
 To run the API in the background and write logs to a file named awesome-api.log, run:
@@ -39,6 +39,11 @@ To run automated tests for the API, run:
 make test
 This will execute a series oif automated tests that make requests to the API and check their responses.
 
+### Lint
+
+To run lint to your code :
+make lint
+This will execute golangci-lint to check your code.
 ### Help
 
 To see a liust of avaible comlmands and their usage, run:

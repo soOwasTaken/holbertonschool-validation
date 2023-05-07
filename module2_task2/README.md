@@ -44,6 +44,12 @@ This will execute a series oif automated tests that make requests to the API and
 To run lint to your code :
 make lint
 This will execute golangci-lint to check your code.
+
+### Unit-tests
+
+To run unit-test :
+make unit-tests
+this will execute Golang unit tests.
 ### Help
 
 To see a liust of avaible comlmands and their usage, run:

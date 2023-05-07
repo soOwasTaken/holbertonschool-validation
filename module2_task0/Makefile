@@ -21,6 +21,13 @@ stop: ## Stop the application
 	fi
 
 clean: ## Stop the application, Delete the binary
+	@pid=$$(pgrep awesome-api) && \
+		if [ -n "$$pid" ]; then \
+			kill $$pid; \
+		else \
+			echo "ERROR: 'awesome-api' process not found"; \
+			exit 1; \
+		fi
 	@rm -f $(BINARY_NAME) $(LOG_FILE)
 
 test: ## Run automated tests

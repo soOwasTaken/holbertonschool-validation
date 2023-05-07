@@ -32,6 +32,7 @@ lint: ## lint the program using golangci-lint
 
 unit-tests: ## Execute the Golang unit tests
 	go test -v -short -coverprofile=coverage-units.out
+	go tool cover -func=coverage-units.out
 
 help: ## Show help message
 	@grep "##" Makefile | grep -v grep | sed "s/##//"

@@ -50,6 +50,12 @@ This will execute golangci-lint to check your code.
 To run unit-test :
 make unit-tests
 this will execute Golang unit tests.
+
+### integration-tests:
+to run integration tests run:
+make integration-tests
+this will run integration tests
+
 ### Help
 
 To see a liust of avaible comlmands and their usage, run:

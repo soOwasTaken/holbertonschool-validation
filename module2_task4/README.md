@@ -27,6 +27,15 @@ To create a new blog post, set the `POST_TITLE` and `POST_NAME` environment vari
 make post
 This will create a new blog post with the given title and filename.
 
+### Check
+succeed by default, and fail when presented with a dead link or a badly written
+run:
+make check
+
+### Validate
+succeed by default and should print the result on the stdout:
+make validate
+
 ## Usage
 
 To build the website, run:

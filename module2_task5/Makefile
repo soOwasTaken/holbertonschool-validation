@@ -39,7 +39,7 @@ unit-tests: ## Execute the Golang unit tests
 	@go tool cover -func=coverage-units.out
 
 # Hugo targets
-hugo-build: hugo-check ## Generate the website from the markdown and configuration files using Hugo
+hugo-build: check ## Generate the website from the markdown and configuration files using Hugo
 	@hugo
 
 hugo-clean: ## Clean up the generated website from Hugo

@@ -7,7 +7,7 @@ POST_TITLE ?= "New Blog Post"
 POST_NAME ?= "new-blog-post"
 
 # Golang targets
-go-build: lint ## Compile the source code of the Go application to a binary
+go-build: ## Compile the source code of the Go application to a binary
 	@go build
 
 run: ## Run the Go application in background

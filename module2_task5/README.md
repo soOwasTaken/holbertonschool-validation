@@ -15,6 +15,19 @@ Before building and running the API, you will need to have the following install
 To compile the source code of the API into a binary named awesome-api, run:
 make build
 This will compile the source code and output the binary to the current directory.
+
+### Run
+
+To run the API in the background and write logs to a file named awesome-api.log, run:
+make run
+This will start the API
+
+### Stop
+
+To stop the running API, run:
+make stop
+This will stop the API by sending a SIGTERM signal to the process.
+
 ### Clean
 
 To clean up the generated website, run:
@@ -32,21 +45,35 @@ succeed by default, and fail when presented with a dead link or a badly written
 run:
 make check
 
+### Test
+
+To run automated tests for the API, run:
+make test
+This will execute a series oif automated tests that make requests to the API and check their responses.
+
+### Lint
+
+To run lint to your code :
+make lint
+This will execute golangci-lint to check your code.
+
 ### Validate
 succeed by default and should print the result on the stdout:
 make validate
 
-## Usage
+### integration-tests:
+to run integration tests run:
+make integration-tests
+this will run integration tests
 
-To build the website, run:
-make build
+### Unit-tests
 
-To clean up the website, run:
-make clean
+To run unit-test :
+make unit-tests
+this will execute Golang unit tests.
 
-To create a new blog post, set the `POST_TITLE` and `POST_NAME` environment variables and run:
-make post
+### Help
 
-To see a list of available commands and their usage, run:
+To see a liust of avaible comlmands and their usage, run:
 make help
-This will show a list of available commands and their usage information.
+This will show a list of avaible commands and their usage information.

@@ -49,11 +49,11 @@ hugo-post: ## Create a new blog post using Hugo
 	@hugo new posts/$(POST_NAME).md
 	@sed -i 's/title: .*/title: $(POST_TITLE)/' content/posts/$(POST_NAME).md
 
-hugo-check: ## Check markdown files for dead links and linting issues using Hugo
+check: ## Check markdown files for dead links and linting issues using Hugo
 	@markdownlint content/posts
 	@find content/posts -name '*.md' -exec markdown-link-check {} \;
 
-hugo-validate: ## Validate the generated HTML with the W3C standards using Hugo
+validate: ## Validate the generated HTML with the W3C standards using Hugo
 	-@python3 w3c_validator.py ./dist/index.html
 
 # Intermediate targets
@@ -61,9 +61,9 @@ build: go-build hugo-build ## Compile the source code of the Go application and 
 
 clean: go-clean hugo-clean ## Clean up the Go application and the generated website
 
-test: go-test hugo-validate ## Run automated tests for Go
+test: go-test validate ## Run automated tests for Go
 
-lint: go-lint hugo-check ## Lint the Go program and check the markdown files for dead links and linting issues using Hugo
+lint: go-lint check ## Lint the Go program and check the markdown files for dead links and linting issues using Hugo
 
 help: ## Show help message
 	@grep "##" Makefile | grep -v grep | sed "s/##//"

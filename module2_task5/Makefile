@@ -45,7 +45,7 @@ hugo-build: hugo-check ## Generate the website from the markdown and configurati
 hugo-clean: ## Clean up the generated website from Hugo
 	@rm -rf dist/*
 
-hugo-post: ## Create a new blog post using Hugo
+post: ## Create a new blog post using Hugo
 	@hugo new posts/$(POST_NAME).md
 	@sed -i 's/title: .*/title: $(POST_TITLE)/' content/posts/$(POST_NAME).md
 

@@ -16,5 +16,8 @@ check: ## Check markdown files for dead links and linting issues
 	@markdownlint content/posts
 	@find content/posts -name '*.md' -exec markdown-link-check {} \;
 
+validate: ## Validate the generated HTML with the W3C standards
+	@python3 /opt/W3C-Validator
+
 help: ## Show help message
 	@grep "##" Makefile | grep -v grep | sed "s/##//"

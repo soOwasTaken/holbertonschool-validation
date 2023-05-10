@@ -26,15 +26,15 @@ go-clean: stop ## Stop the Go application, Delete the binary
 	@rm -f $(BINARY_NAME) $(LOG_FILE)
 	@rm -f coverage-integrations.out coverage-units.out
 
-go-test: go-unit-tests go-integration-tests ## Run automated tests for Go
+go-test: unit-tests integration-tests ## Run automated tests for Go
 
 go-lint: ## Lint the Go program using golangci-lint
 	@golangci-lint run >/dev/null 2>&1 && echo "OK" || (echo "ERROR" && exit 1)
 
-go-integration-tests: ## Run integration tests for Go
+integration-tests: ## Run integration tests for Go
 	@go test -v -tags=integration -coverprofile=coverage-integrations.out ./...
 
-go-unit-tests: ## Execute the Golang unit tests
+unit-tests: ## Execute the Golang unit tests
 	@go test -v -short -coverprofile=coverage-units.out && chmod u+x coverage-units.out
 	@go tool cover -func=coverage-units.out
 

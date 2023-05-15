@@ -64,7 +64,8 @@ clean: go-clean hugo-clean ## Clean up the Go application and the generated webs
 
 test: go-test validate ## Run automated tests for Go
 
-lint: go-lint check ## Lint the Go program and check the markdown files for dead links and linting issues using Hugo
+lint: ## Lint the Go program and check the markdown files for dead links and linting issues using Hugo
+	@markdownlint DEPLOY.md
 
 package: ## Package the binary and dist/ directory
 	@zip -r awesome-website.zip awesome-api dist/

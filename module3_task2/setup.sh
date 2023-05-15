@@ -16,7 +16,6 @@ rm -rf hugo_extended_0.84.0_Linux-64bit.tar.gz LICENSE README.md
 # install golangci-lint && markdown-link-check
 npm install -g markdownlint-cli@0.26.0
 npm install -g markdown-link-check@3.8.6
-apt-get install 
 markdownlint --version
 
 

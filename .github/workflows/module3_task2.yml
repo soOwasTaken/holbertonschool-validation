@@ -1,0 +1,28 @@
+---
+name: module3_task2
+
+"on":
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Validate Makefile
+        run: |
+          cd module3_task1
+          ./setup.sh
+
+      - name: Build and Test
+        run: |
+          make build
+          make check
+          make validate
+  
+      - name: Package if tests and validation pass
+        if: success() && github.ref == 'refs/heads/main'
+        run: make package

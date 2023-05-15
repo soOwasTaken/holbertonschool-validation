@@ -13,6 +13,12 @@ tar -xf hugo_extended_0.84.0_Linux-64bit.tar.gz
 mv hugo /usr/local/bin/
 rm -rf hugo_extended_0.84.0_Linux-64bit.tar.gz LICENSE README.md
 
+# install golangci-lint && markdown-link-check
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+golangci-lint --version 
+npm install -g markdownlint
+npm install -g markdown-link-check
+
 # Go to the project directory
 cd "$(dirname "$0")"
 

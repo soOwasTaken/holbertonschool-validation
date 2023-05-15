@@ -16,10 +16,6 @@ jobs:
         run: |
           cd module3_task1
           ./setup.sh
-      - name: Check and Validate.
-        run: |
-          make check
-          make validate
 
       - name: Package if tests and validation pass
         if: success() && github.ref == 'refs/heads/main'

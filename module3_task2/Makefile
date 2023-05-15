@@ -50,7 +50,7 @@ post: ## Create a new blog post using Hugo
 	@sed -i 's/title: .*/title: $(POST_TITLE)/' content/posts/$(POST_NAME).md
 
 check: ## Check markdown files for dead links and linting issues using Hugo
-	@markdownlint content/posts
+	@markdownlint content/posts DEPLOY.md
 	@find content/posts -name '*.md' -exec markdown-link-check {} \;
 
 validate: ## Validate the generated HTML with the W3C standards using Hugo

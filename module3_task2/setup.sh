@@ -24,4 +24,3 @@ cd "$(dirname "$0")"
 
 # Build the website
 make build
-make lint

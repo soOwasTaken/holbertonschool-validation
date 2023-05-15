@@ -53,8 +53,8 @@ Use the [installation instructions in the Hugo documentation](https://gohugo.io/
 
 #### Prerequisite Tools
 
-* [Git](https://git-scm.com/)
-* [Go (we test it with the last 2 major versions; but note that Hugo 0.81.0 only builds with >= Go 1.16.)](https://golang.org/dl/)
+- [Git](https://git-scm.com/)
+- [Go (we test it with the last 2 major versions; but note that Hugo 0.81.0 only builds with >= Go 1.16.)](https://golang.org/dl/)
 
 #### Fetch from GitHub
 
@@ -83,6 +83,7 @@ The Hugo documentation now lives in its own repository, see https://github.com/g
 ```bash
 git clone git@github.com:gohugoio/hugo.git
 ```
+
 ## Contributing to Hugo
 
 For a complete guide to contributing to Hugo, see the [Contribution Guide](CONTRIBUTING.md).
@@ -224,3 +225,4 @@ gopkg.in/ini.v1="v1.51.1"
 gopkg.in/yaml.v2="v2.4.0"
 
 
+```

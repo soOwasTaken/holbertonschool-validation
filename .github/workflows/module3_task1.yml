@@ -16,4 +16,3 @@ jobs:
         run: |
           cd module3_task1
           ./setup.sh
-          make build

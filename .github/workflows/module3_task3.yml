@@ -17,12 +17,20 @@
         - uses: actions/checkout@v2
         - name: Validate Makefile
           run: |
-            cd module3_task2
+            cd module3_task3
             ./setup.sh
+            make build
+            make unit-tests
+            make help
+            make integration-tests
+            make validate
   
         - name: Package if tests and validation pass
           if: success() && github.ref == 'refs/heads/main'
-          run: make package
+          run: |
+            cd module3_task3
+            make lint
+            make package
   
         - name: Generate Archive
           if: github.event_name == 'push' && github.ref_type == 'tag'

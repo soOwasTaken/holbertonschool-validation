@@ -41,12 +41,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Build and Package
-        run: |
-          cd module3_task3
-          make lint
-          make package
-
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1

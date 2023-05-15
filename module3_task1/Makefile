@@ -1,51 +1,69 @@
-GO=go
-TARGET=awesome-api
-RM=rm -rf
-MAKE=make
-COVERAGE=coverage
-HUGO=hugo
+# Define variables
+BINARY_NAME = awesome-api
+LOG_FILE = awesome-api.log
+PID_FILE = awesome-api.pid
+PORT = 9999
+POST_TITLE ?= "New Blog Post"
+POST_NAME ?= "new-blog-post"
 
-build:	## Generate the source code of the application to a binary.
-	$(MAKE) lint
-	$(GO) mod tidy
-	$(MAKE) check && $(HUGO) && $(GO) build -o $(TARGET)
+# Golang targets
+go-build: ## Compile the source code of the Go application to a binary
+	@go build
 
-run:	## Run the application in background by executing the binary.
-	./$(TARGET) >./$(TARGET).log 2>&1 &
+run: ## Run the Go application in background
+	@./awesome-api >./awesome-api.log 2>&1 &
 
-post:	## Create a new blog post whose filename and title come from the environment variables POST_TITLE and POST_NAME
-	$(HUGO) new posts/$(POST_NAME).md
-	sed -i '2s/.*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
-
-stop:	## Stop the application.
-	@pkill $(TARGET)
-
-clean:	## Stop the application. Delete the binary and the log file.
-	@if pgrep -x $(TARGET) > /dev/null; then \
-		pkill $(TARGET); \
+stop: ## Stop the Go application
+	@pid=$$(pgrep $(BINARY_NAME)); \
+	if [ -n "$$pid" ]; then \
+	    kill $$pid; \
+	else \
+	    echo "WARNING: '$(BINARY_NAME)' process not found"; \
 	fi
-	@$(RM) $(TARGET) $(TARGET).log $(COVERAGE)-units.out $(COVERAGE)-integrations.out dist/ *~
+	@exit 0
 
-test:	## Test the application.
-	$(MAKE) unit-tests
-	$(MAKE) integration-tests
-	$(MAKE) validate
+go-clean: stop ## Stop the Go application, Delete the binary
+	@rm -f $(BINARY_NAME) $(LOG_FILE)
+	@rm -f coverage-integrations.out coverage-units.out
 
-unit-tests: ## Run unit tests
-	go test -v -short -coverprofile=$(COVERAGE)-units.out
+go-test: unit-tests integration-tests ## Run automated tests for Go
 
-integration-tests: ## Run integration tests
-	go test -v -coverprofile=$(COVERAGE)-integrations.out
+go-lint: ## Lint the Go program using golangci-lint
+	@golangci-lint run >/dev/null 2>&1 && echo "OK" || (echo "ERROR" && exit 1)
 
-lint:	## Lint go lang code
-	golangci-lint run
+integration-tests: ## Run integration tests for Go
+	@go test -v -tags=integration -coverprofile=coverage-integrations.out ./...
 
-check:	## Lint markdonw source, check dead links
-	markdownlint content/**/*.md
-	find content -name \*.md -print0 | xargs -0 -n1 markdown-link-check
+unit-tests: ## Execute the Golang unit tests
+	@go test -v -short -coverprofile=coverage-units.out && chmod u+x coverage-units.out
+	@go tool cover -func=coverage-units.out
 
-validate:	## Validate the file dist/index.html using the command line Holberton’s W3C Validator.
-	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html || true
+# Hugo targets
+hugo-build: check ## Generate the website from the markdown and configuration files using Hugo
+	@hugo
 
-help:	## Show this help usage.
-	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
+hugo-clean: ## Clean up the generated website from Hugo
+	@rm -rf dist/*
+
+post: ## Create a new blog post using Hugo
+	@hugo new posts/$(POST_NAME).md
+	@sed -i 's/title: .*/title: $(POST_TITLE)/' content/posts/$(POST_NAME).md
+
+check: ## Check markdown files for dead links and linting issues using Hugo
+	@markdownlint content/posts
+	@find content/posts -name '*.md' -exec markdown-link-check {} \;
+
+validate: ## Validate the generated HTML with the W3C standards using Hugo
+	-@python3 w3c_validator.py ./dist/index.html
+
+# Intermediate targets
+build: go-build hugo-build ## Compile the source code of the Go application and generate the website from the markdown and configuration files
+
+clean: go-clean hugo-clean ## Clean up the Go application and the generated website
+
+test: go-test validate ## Run automated tests for Go
+
+lint: go-lint check ## Lint the Go program and check the markdown files for dead links and linting issues using Hugo
+
+help: ## Show help message
+	@grep "##" Makefile | grep -v grep | sed "s/##//"

@@ -14,7 +14,7 @@ The archive file contains the following items:
 To unarchive the package, follow these steps:
 
     Place the awesome-website.zip file in the desired location on the
-    deployment server.
+    deployment server
 
     Open a terminal and navigate to the directory where the package is located.
 

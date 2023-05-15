@@ -21,3 +21,6 @@ markdownlint --version
 
 # Go to the project directory
 cd "$(dirname "$0")"
+
+# Build the website
+make build

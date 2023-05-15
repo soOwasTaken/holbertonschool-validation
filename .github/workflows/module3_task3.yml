@@ -1,0 +1,38 @@
+---
+  name: module3_task3
+  
+  "on":
+    push:
+      branches: [main]
+    schedule:
+      - cron: "0 0 * * *"
+    release:
+      types:
+        - created
+  
+  jobs:
+    build:
+      runs-on: ubuntu-22.04
+      steps:
+        - uses: actions/checkout@v2
+        - name: Validate Makefile
+          run: |
+            cd module3_task2
+            ./setup.sh
+  
+        - name: Package if tests and validation pass
+          if: success() && github.ref == 'refs/heads/main'
+          run: make package
+  
+        - name: Generate Archive
+          if: github.event_name == 'push' && github.ref_type == 'tag'
+          run: make package
+  
+        - name: Create Release
+          if: github.event_name == 'release' && github.event.action == 'created'
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            make package
+            gh release create ${{ github.ref }} -F DEPLOY.md -t "Release ${{ github.ref }}"
+  

@@ -16,7 +16,8 @@ jobs:
         run: |
           cd module3_task1
           ./setup.sh
-          make build
+      - name: Check and Validate.
+        run: |
           make check
           make validate
 

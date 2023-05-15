@@ -1,14 +1,10 @@
----
 name: module3_task3
 
-"on":
+on:
   push:
     branches: [main]
-  schedule:
-    - cron: "0 0 * * *"
-  release:
-    types:
-      - created
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -17,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Validate Makefile
         run: |
-          cd module3_task3
+          cd module3_task2
           ./setup.sh
           make build
           make unit-tests
@@ -26,22 +22,31 @@ jobs:
           make validate
 
       - name: Package if tests and validation pass
-        if: success() && github.ref == 'refs/heads/main'
+        if: success() && github.ref == 'refs/heads/main' && !startsWith(github.ref, 'refs/tags/')
         run: |
-          cd module3_task3
+          cd module3_task2
           make lint
           make package
 
-      - name: Generate Archive
-        if: github.event_name == 'push' && github.ref_type == 'tag'
-        run: make package
+  create-release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Build and Package
+        run: |
+          cd module3_task2
+          make lint
+          make package
 
       - name: Create Release
-        if: github.event_name == 'release' && github.event.action == 'created'
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./module3_task3/*.rar
+          body_path: ./module3_task2/DEPLOY.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          make package
-          gh release create ${{ github.ref }} \
-          -F DEPLOY.md \
-          -t "Release ${{ github.ref }}"

@@ -5,35 +5,11 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    types:
-      - closed
 
 jobs:
-  release_drafter:
+  update_release_draft:
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Generate changelog
-        run: npx release-drafter
-
-      - name: Create or update draft release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            ./module3_task4/awesome-website.zip
-            ./module3_task4/DEPLOY.md
-          draft: true
-          prerelease: false
+      - uses: release-drafter/release-drafter@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

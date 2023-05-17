@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Validate Makefile
         run: |
-          cd module3_task4
+          cd module3_task5
           ./setup.sh
           make build
           make unit-tests
@@ -31,9 +31,11 @@ jobs:
           github.ref == 'refs/heads/main' &&
           !startsWith(github.ref, 'refs/tags/')
         run: |
-          cd module3_task4
+          cd module3_task5
           make lint
           make package
+          netlify deploy --dir=./dist/
+          netlify deploy --prod --dir=./dist/
 
   deploy:
     needs: build
@@ -64,7 +66,7 @@ jobs:
 
       - name: Create Package
         run: |
-          cd module3_task4
+          cd module3_task5
           make package
           netlify deploy --dir=./dist/
           netlify deploy --prod --dir=./dist/
@@ -73,8 +75,8 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files: ./module3_task4/awesome-website.zip
-          body_path: ./module3_task4/DEPLOY.md
+          files: ./module3_task5/awesome-website.zip
+          body_path: ./module3_task5/DEPLOY.md
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

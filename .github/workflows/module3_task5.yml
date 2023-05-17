@@ -11,6 +11,8 @@ on:
     branches: [main]
 
 jobs:
+  permissions:
+  contents: write
   build:
     runs-on: ubuntu-22.04
     steps:
@@ -40,9 +42,9 @@ jobs:
           github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
         uses: nwtgck/actions-netlify@v2.0
         with:
-          publish-dir: 'module3_task5/dist'
+          publish-dir: "module3_task5/dist"
           production-branch: main
-          deploy-message: 'Deploy from GitHub Actions'
+          deploy-message: "Deploy from GitHub Actions"
           enable-pull-request-comment: true
           enable-commit-comment: true
           overwrites-pull-request-comment: true

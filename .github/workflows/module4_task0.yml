@@ -19,10 +19,13 @@ jobs:
       statuses: write
     steps:
       - uses: actions/checkout@v2
-      - name: Install dependenties
-        run: |
+      - name: Install Markdownlint
+        run: sudo npm install -g markdownlint-cli
+      - name: Install Markdown Link Check
+        run: sudo npm install -g markdown-link-check
+      - run: sudo ./module4_task0/setup.sh
+      - run: |
           cd module4_task0
-          ./setup.sh
           make unit-tests
           make integration-tests
 

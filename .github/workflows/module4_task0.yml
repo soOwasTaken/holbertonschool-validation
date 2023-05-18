@@ -1,0 +1,82 @@
+name: module4_task0
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - "*"
+  schedule:
+    - cron: "0 0 * * *"
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+      deployments: write
+      statuses: write
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependenties
+        run: |
+          cd module4_task0
+          ./setup.sh
+          make unit-tests
+          make integration-tests
+
+      - run:
+          make go-build
+
+      - name: Package if tests and validation pass
+        if: >
+          success() &&
+          github.ref == 'refs/heads/main' &&
+          !startsWith(github.ref, 'refs/tags/')
+        run: |
+          cd module4_task0
+          make lint
+          make package
+
+      - name: Deploy to Netlify
+        if: |
+          github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+        uses: nwtgck/actions-netlify@v2.0
+        with:
+          publish-dir: "module4_task0/dist"
+          production-branch: main
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
+
+  create-release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Create Package
+        run: |
+          cd module3_task5
+          make package
+          netlify deploy --dir=./dist/
+          netlify deploy --prod --dir=./dist/
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./module4_task0/awesome-website.zip
+          body_path: ./module4_task0/DEPLOY.md
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

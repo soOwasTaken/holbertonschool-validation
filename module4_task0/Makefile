@@ -44,7 +44,7 @@ integration-tests: ## Run integration tests
 	$(DOCKER_RUN) go test -v -coverprofile=coverage-integrations.out
 
 # Hugo targets
-hugo-build: check ## Generate the website from the markdown and configuration files using Hugo
+hugo-build: ## Generate the website from the markdown and configuration files using Hugo
 	@hugo
 
 hugo-clean: ## Clean up the generated website from Hugo

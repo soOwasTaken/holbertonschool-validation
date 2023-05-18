@@ -19,9 +19,14 @@ jobs:
       statuses: write
     steps:
       - uses: actions/checkout@v2
-      - name: Validate Makefile
+      - name: Install dependenties
         run: |
           cd module4_task0
+          ./setup.sh
+          make unit-tests
+          make integration-tests
+
+      - run:
           make go-build
 
       - name: Package if tests and validation pass

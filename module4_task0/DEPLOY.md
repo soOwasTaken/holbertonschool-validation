@@ -71,9 +71,9 @@ Typically, it is /health or /status.
 Use the following command to make a GET
 request to the healthcheck endpoint:
 
-curl "http://localhost:8080/health"
+curl <http://localhost:8080/health>
 
-Replace "http://localhost:8080" with the actual URL and
+Replace <http://localhost:8080> with the actual URL and
 port where the application is running.
 
 A successful response (HTTP status code 200) indicates

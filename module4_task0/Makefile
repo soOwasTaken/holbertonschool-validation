@@ -33,12 +33,11 @@ go-test: unit-tests integration-tests ## Run automated tests for Go
 go-lint: ## Lint the Go program using golangci-lint
 	@$(DOCKER_RUN) golangci-lint run >/dev/null 2>&1 && echo "OK" || (echo "ERROR" && exit 1)
 
-integration-tests: ## Run integration tests for Go
-	@$(DOCKER_RUN) go test -v -tags=integration -coverprofile=coverage-integrations.out ./...
+unit-tests: ## Run unit tests
+	$(DOCKER_RUN) go test -v -short -coverprofile=coverage-units.out
 
-unit-tests: ## Execute the Golang unit tests
-	@$(DOCKER_RUN) go test -v -short -coverprofile=coverage-units.out && chmod u+x coverage-units.out
-	@$(DOCKER_RUN) go tool cover -func=coverage-units.out
+integration-tests: ## Run integration tests
+	$(DOCKER_RUN) go test -v -coverprofile=coverage-integrations.out
 
 # Hugo targets
 hugo-build: check ## Generate the website from the markdown and configuration files using Hugo

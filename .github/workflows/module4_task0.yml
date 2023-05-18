@@ -22,7 +22,7 @@ jobs:
       - name: Validate Makefile
         run: |
           cd module4_task0
-          make build-go
+          make go-build
           make unit-tests
           make help
           make integration-tests

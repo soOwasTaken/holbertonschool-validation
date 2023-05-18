@@ -10,7 +10,7 @@ DOCKER_RUN = docker run --rm -v "${PWD}":/usr/src/myapp -w /usr/src/myapp golang
 
 # Golang targets
 go-build: ## Compile the source code of the Go application to a binary
-	@$(DOCKER_RUN) go build -o $(BINARY_NAME)
+	$(DOCKER_RUN) go build -o $(BINARY_NAME)
 
 run: ## Run the Go application in background
 	@./awesome-api >./awesome-api.log 2>&1 &

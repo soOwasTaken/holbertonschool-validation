@@ -26,8 +26,9 @@ jobs:
           make unit-tests
           make integration-tests
 
-      - run:
-          make go-build
+      - run: |
+          cd module4_task0
+          make build
 
       - name: Package if tests and validation pass
         if: >

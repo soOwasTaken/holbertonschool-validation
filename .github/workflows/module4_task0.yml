@@ -13,10 +13,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    permissions:
-      contents: write
-      deployments: write
-      statuses: write
     steps:
       - uses: actions/checkout@v2
       - name: Install dependenties
